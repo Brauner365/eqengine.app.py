@@ -1,0 +1,114 @@
+class EQEngine:
+    def __init__(self, candidate_data, interaction_transcripts, psychometric_data=None, video_path=None):
+        self.candidate_data = candidate_data
+        self.transcripts = interaction_transcripts
+        self.psychometrics = psychometric_data or {}
+        self.video_path = video_path
+        self.profile = {}
+        self.benchmark_data = {}
+
+    # === PUBLIC METHODS ===
+    def generate_summary(self):
+        self.profile["Candidate Summary"] = self._build_candidate_synopsis()
+        self.profile["Areas to Probe"] = self._detect_flags()
+
+    def analyse_emotional_intelligence(self):
+        self.profile["Emotional Intelligence"] = {
+            "Self-Awareness": self._rate_self_awareness(),
+            "Self-Regulation": self._rate_self_regulation(),
+            "Motivation": self._rate_motivation(),
+            "Empathy": self._rate_empathy(),
+            "Social Skills": self._rate_social_skills(),
+        }
+
+    def analyse_cognitive_ability(self):
+        self.profile["Cognitive Traits"] = {
+            "Problem Solving": self._rate_problem_solving(),
+            "Abstract Reasoning": self._rate_abstract_reasoning(),
+            "Verbal Intelligence": self._rate_verbal_intelligence(),
+            "Pattern Recognition": self._rate_pattern_recognition(),
+            "Working Memory": self._rate_working_memory(),
+        }
+
+    def integrate_psychometrics(self):
+        if not self.psychometrics:
+            return
+        self.profile["Psychometric Assessment"] = {
+            "Big Five": self.psychometrics.get("BigFive"),
+            "DISC": self.psychometrics.get("DISC"),
+            "MBTI": self.psychometrics.get("MBTI"),
+            "SJT": self.psychometrics.get("SJT"),
+            "GIA": self.psychometrics.get("GIA"),
+        }
+
+    def infer_leadership_style(self):
+        if self._is_leadership_candidate():
+            self.profile["Leadership Style"] = {
+                "Leadership Type": self._get_leadership_type(),
+                "Style": self._get_leadership_style(),
+                "Pace": self._get_operational_pace(),
+                "Decision-Making Bias": self._get_decision_bias(),
+                "Team Management Approach": self._get_team_methodology(),
+            }
+
+    def generate_client_report(self, role_title, prepared_by, report_date):
+        self._ensure_non_bias()
+        self._document_data_sources()
+
+        return {
+            "Header": {
+                "Report Title": "Emotional, Cognitive and Psychometric Profile",
+                "Candidate For": role_title,
+                "Prepared By": prepared_by,
+                "Date": report_date,
+            },
+            "Sections": {
+                "Overview": self._build_overview(),
+                "Emotional Intelligence": self.profile.get("Emotional Intelligence", {}),
+                "Cognitive Traits": self.profile.get("Cognitive Traits", {}),
+                "Psychometric Assessment": self.profile.get("Psychometric Assessment", {}),
+                "Areas to Probe": self.profile.get("Areas to Probe", {}),
+                "Leadership Style": self.profile.get("Leadership Style", {}),
+                "Data Transparency": self.profile.get("Data Transparency", {}),
+            },
+        }
+
+    # === INTERNAL METHODS (trimmed to run) ===
+    def _build_candidate_synopsis(self): return "Candidate overview generated."
+    def _detect_flags(self): return ["No major concerns flagged."]
+    def _rate_self_awareness(self): return "Above Average"
+    def _rate_self_regulation(self): return "Good"
+    def _rate_motivation(self): return "High"
+    def _rate_empathy(self): return "Strong"
+    def _rate_social_skills(self): return "Very Strong"
+    def _rate_problem_solving(self): return "Strong"
+    def _rate_abstract_reasoning(self): return "Above Average"
+    def _rate_verbal_intelligence(self): return "High"
+    def _rate_pattern_recognition(self): return "Good"
+    def _rate_working_memory(self): return "Stable"
+    def _is_leadership_candidate(self): return True
+    def _get_leadership_type(self): return "Transformational"
+    def _get_leadership_style(self): return "Collaborative"
+    def _get_operational_pace(self): return "Fast"
+    def _get_decision_bias(self): return "Analytical"
+    def _get_team_methodology(self): return "Inclusive"
+
+    def _ensure_non_bias(self): self._cross_reference_industry_standards()
+    def _cross_reference_industry_standards(self):
+        self.benchmark_data = {
+            "SHL": "OPQ, Verify, SJTs, skills",
+            "Test Partnership": "adaptive ability, personality, EI, gamified",
+            "Criteria": "CCAT, Cognify, Emotify, skills",
+            "ThriveMap": "role simulations, culture fit",
+            "Sova": "psychometrics, SJTs, video, centres"
+        }
+    def _document_data_sources(self):
+        self.profile["Data Transparency"] = {
+            "Sources": [
+                "Interview transcripts",
+                "Psychometric assessments",
+                "Cognitive tests",
+                "Top 5 global psychometric benchmarks"
+            ]
+        }
+    def _build_overview(self): return "Overview based on transcripts + benchmarks."
